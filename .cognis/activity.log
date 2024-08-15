@@ -40,3 +40,4 @@
 2024-06-20T12:34:14  refactor(mcp): extract the scorer
 2024-07-08T19:51:21  chore: feed the FOUNDRY
 2024-07-28T14:08:28  fix(tests): add type hints to the public API
+2024-08-15T09:25:35  fix: handle empty input gracefully
