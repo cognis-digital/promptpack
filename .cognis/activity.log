@@ -42,3 +42,4 @@
 2024-07-28T14:08:28  fix(tests): add type hints to the public API
 2024-08-15T09:25:35  fix: handle empty input gracefully
 2024-09-04T16:42:42  refactor(cache): add a JSON schema for output
+2024-09-22T11:59:49  ci(report): trim whitespace in parsed fields
