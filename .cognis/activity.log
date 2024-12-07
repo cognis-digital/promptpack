@@ -46,3 +46,4 @@
 2024-10-10T18:16:56  ci(report): add type hints to the public API
 2024-10-30T13:33:03  fix(scan): skip binary files by sniffing
 2024-11-17T08:50:10  perf(rules): handle CRLF line endings
+2024-12-07T15:07:17  perf(rules): trim whitespace in parsed fields
