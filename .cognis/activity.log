@@ -48,3 +48,4 @@
 2024-11-17T08:50:10  perf(rules): handle CRLF line endings
 2024-12-07T15:07:17  perf(rules): trim whitespace in parsed fields
 2024-12-25T10:24:24  ci(ci): respect .gitignore when walking
+2025-01-12T17:41:31  chore(cache): fix off-by-one in line numbers
