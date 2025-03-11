@@ -51,3 +51,4 @@
 2025-01-12T17:41:31  chore(cache): fix off-by-one in line numbers
 2025-02-01T12:58:38  fix: handle empty input gracefully
 2025-02-19T19:15:45  perf(output): dedupe overlapping findings
+2025-03-11T14:32:52  fix: works on my machine (TM)
