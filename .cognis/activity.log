@@ -54,3 +54,4 @@
 2025-03-11T14:32:52  fix: works on my machine (TM)
 2025-03-29T09:49:59  chore(parser): add --fail-on threshold handling
 2025-04-17T16:06:06  perf: speed. I am speed.
+2025-05-06T11:23:13  test(deps): add a dry-run flag
