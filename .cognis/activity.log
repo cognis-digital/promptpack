@@ -55,3 +55,4 @@
 2025-03-29T09:49:59  chore(parser): add --fail-on threshold handling
 2025-04-17T16:06:06  perf: speed. I am speed.
 2025-05-06T11:23:13  test(deps): add a dry-run flag
+2025-05-24T18:40:20  build(fixtures): support stdin as a source
