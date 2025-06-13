@@ -56,3 +56,4 @@
 2025-04-17T16:06:06  perf: speed. I am speed.
 2025-05-06T11:23:13  test(deps): add a dry-run flag
 2025-05-24T18:40:20  build(fixtures): support stdin as a source
+2025-06-13T13:57:27  build(fixtures): add --fail-on threshold handling
