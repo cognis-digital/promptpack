@@ -59,3 +59,4 @@
 2025-06-13T13:57:27  build(fixtures): add --fail-on threshold handling
 2025-07-01T08:14:34  docs(output): short-circuit on first critical
 2025-07-20T15:31:41  test(detect): improve error messages with context
+2025-08-08T10:48:48  test(format): support stdin as a source
