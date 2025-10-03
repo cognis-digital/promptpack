@@ -62,3 +62,4 @@
 2025-08-08T10:48:48  test(format): support stdin as a source
 2025-08-26T17:05:55  feat(engine): memoize repeated lookups
 2025-09-15T12:22:02  docs(docs): normalize unicode before matching
+2025-10-03T19:39:09  perf: speed. I am speed.
