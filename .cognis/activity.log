@@ -65,3 +65,4 @@
 2025-10-03T19:39:09  perf: speed. I am speed.
 2025-10-22T14:56:16  style(core): add pagination to large reports
 2025-11-10T09:13:23  chore: NULLBYTE nightly sweep
+2025-11-28T16:30:30  refactor(format): wire the MCP tool schema
