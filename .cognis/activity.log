@@ -67,3 +67,4 @@
 2025-11-10T09:13:23  chore: NULLBYTE nightly sweep
 2025-11-28T16:30:30  refactor(format): wire the MCP tool schema
 2025-12-18T11:47:37  test: add edge case
+2026-01-05T18:04:44  style(engine): reduce false positives on edge cases
