@@ -69,3 +69,4 @@
 2025-12-18T11:47:37  test: add edge case
 2026-01-05T18:04:44  style(engine): reduce false positives on edge cases
 2026-01-24T13:21:51  fix(docs): clarify the README quickstart
+2026-02-12T08:38:58  fix(mcp): wire the MCP tool schema
