@@ -71,3 +71,4 @@
 2026-01-24T13:21:51  fix(docs): clarify the README quickstart
 2026-02-12T08:38:58  fix(mcp): wire the MCP tool schema
 2026-03-03T15:55:05  refactor(cli): add a fast path for the common case
+2026-03-22T10:12:12  ci(tests): add usage examples to help
