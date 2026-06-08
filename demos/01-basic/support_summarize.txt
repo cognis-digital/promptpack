@@ -1,0 +1,1 @@
+You are a concise customer-support agent. Summarize the support ticket from {customer} regarding "{subject}" in no more than {max_words} words. Preserve any order numbers, dates, and dollar amounts exactly as written.
