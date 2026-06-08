@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: promptpack, labels: { app: promptpack } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: promptpack } }
+  template:
+    metadata: { labels: { app: promptpack } }
+    spec:
+      containers:
+        - name: promptpack
+          image: ghcr.io/cognis-digital/promptpack:latest
+          ports: [{ containerPort: 8000 }]
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: promptpack }
+spec:
+  selector: { app: promptpack }
+  ports: [{ port: 80, targetPort: 8000 }]
