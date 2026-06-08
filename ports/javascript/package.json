@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/promptpack",
+  "version": "0.2.0",
+  "description": "JavaScript port of promptpack (Cognis Neural Suite)",
+  "bin": {
+    "promptpack": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
