@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-promptpack
+pip install "git+https://github.com/cognis-digital/promptpack.git"
 promptpack scan .            # → prioritized findings in seconds
 ```
 
@@ -49,7 +49,7 @@ promptops
 ## Quick start
 
 ```bash
-pip install cognis-promptpack
+pip install "git+https://github.com/cognis-digital/promptpack.git"
 promptpack --version
 promptpack scan .                       # scan current project
 promptpack scan . --format json         # machine-readable
