@@ -20,6 +20,42 @@ pip install cognis-promptpack
 promptpack scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+1. Install the CLI (Python 3.9+):
+
+   ```bash
+   pip install git+https://github.com/cognis-digital/promptpack.git
+   ```
+
+2. Commit an immutable version of a prompt to the registry:
+
+   ```bash
+   promptpack commit greeting --file greeting.txt -m "first cut"
+   ```
+
+3. Tag a version and render it with variables substituted:
+
+   ```bash
+   promptpack tag greeting prod --ref latest
+   promptpack render greeting --ref prod --var name=Ada
+   ```
+
+4. Inspect history, diff two refs, or read JSON for tooling:
+
+   ```bash
+   promptpack history greeting
+   promptpack diff greeting 1 2
+   promptpack --format json list
+   ```
+
+5. Run a deterministic A/B selection (e.g. in a serving path):
+
+   ```bash
+   promptpack ab greeting prod 1:1 2:3
+   promptpack choose greeting prod --key user-123
+   ```
+
 ## Contents
 
 - [Why promptpack?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
