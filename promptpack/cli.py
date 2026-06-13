@@ -54,56 +54,62 @@ def _parse_variants(specs: List[str]) -> List[dict]:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    # Shared parent that adds --format to every subcommand so it can appear
+    # either before or after the subcommand name.
+    fmt_parent = argparse.ArgumentParser(add_help=False)
+    fmt_parent.add_argument("--format", choices=["table", "json"], default="table")
+
     ap = argparse.ArgumentParser(prog=TOOL_NAME,
-                                 description="Versioned prompt registry with A/B and rollbacks.")
+                                 description="Versioned prompt registry with A/B and rollbacks.",
+                                 parents=[fmt_parent])
     ap.add_argument("--version", action="version",
                     version=f"{TOOL_NAME} {TOOL_VERSION}")
     ap.add_argument("--db", default=DEFAULT_DB, help="registry file path")
-    ap.add_argument("--format", choices=["table", "json"], default="table")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    p = sub.add_parser("commit", help="add a new immutable version")
+    p = sub.add_parser("commit", help="add a new immutable version", parents=[fmt_parent])
     p.add_argument("name")
     g = p.add_mutually_exclusive_group(required=True)
     g.add_argument("--body")
     g.add_argument("--file", help="read body from file ('-' for stdin)")
     p.add_argument("-m", "--message", default="")
 
-    p = sub.add_parser("list", help="list prompts")
+    p = sub.add_parser("list", help="list prompts", parents=[fmt_parent])
 
-    p = sub.add_parser("get", help="show a version's body")
+    p = sub.add_parser("get", help="show a version's body", parents=[fmt_parent])
     p.add_argument("name")
     p.add_argument("--ref", help="version number, tag, or 'latest'")
 
-    p = sub.add_parser("history", help="version history of a prompt")
+    p = sub.add_parser("history", help="version history of a prompt", parents=[fmt_parent])
     p.add_argument("name")
 
-    p = sub.add_parser("tag", help="point a tag at a version")
+    p = sub.add_parser("tag", help="point a tag at a version", parents=[fmt_parent])
     p.add_argument("name")
     p.add_argument("tag")
     p.add_argument("--ref")
 
-    p = sub.add_parser("rollback", help="roll a tag back to a prior version")
+    p = sub.add_parser("rollback", help="roll a tag back to a prior version", parents=[fmt_parent])
     p.add_argument("name")
     p.add_argument("tag")
     p.add_argument("ref")
 
-    p = sub.add_parser("render", help="render a version with variables")
+    p = sub.add_parser("render", help="render a version with variables", parents=[fmt_parent])
     p.add_argument("name")
     p.add_argument("--ref")
     p.add_argument("--var", action="append", help="key=value (repeatable)")
 
-    p = sub.add_parser("diff", help="unified diff between two refs")
+    p = sub.add_parser("diff", help="unified diff between two refs", parents=[fmt_parent])
     p.add_argument("name")
     p.add_argument("ref_a")
     p.add_argument("ref_b")
 
-    p = sub.add_parser("ab", help="attach weighted A/B variants to a tag")
+    p = sub.add_parser("ab", help="attach weighted A/B variants to a tag", parents=[fmt_parent])
     p.add_argument("name")
     p.add_argument("tag")
     p.add_argument("variant", nargs="+", help="version[:weight] e.g. 2:3")
 
-    p = sub.add_parser("choose", help="select an A/B variant (deterministic with --key)")
+    p = sub.add_parser("choose", help="select an A/B variant (deterministic with --key)",
+                       parents=[fmt_parent])
     p.add_argument("name")
     p.add_argument("tag")
     p.add_argument("--key", help="stable bucketing key (e.g. user id)")
