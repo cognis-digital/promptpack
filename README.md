@@ -16,9 +16,15 @@
 </div>
 
 ```bash
-pip install cognis-promptpack
+pip install "git+https://github.com/cognis-digital/promptpack.git"
 promptpack scan .            # → prioritized findings in seconds
 ```
+
+<!-- cognis:layman:start -->
+## What is this?
+
+promptpack is a version-control system for the text templates (prompts) you feed to AI tools. Just like software developers use git to track code changes, you can use promptpack to save every version of an AI prompt, roll back to an older one if a new version performs worse, and run A/B experiments to find out which wording works best. It is a self-hosted command-line tool that stores everything in a single local file — no accounts, no cloud service required — making it useful for developers, data scientists, and teams who rely on AI prompts in their products or workflows.
+<!-- cognis:layman:end -->
 
 ## Contents
 
@@ -46,10 +52,56 @@ promptops
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="quick-start"></a>
+<!-- cognis:domains:start -->
+## Domains
+
+**Primary domain:** AI & ML  ·  **JTF MERIDIAN division:** ATHENA-PRIME · SAGE
+
+**Topics:** `cognis` `ai` `llm` `machine-learning`
+
+Part of the **Cognis Neural Suite** — 300+ source-available tools organized across 12 domains under the JTF MERIDIAN command structure. See the [suite on GitHub](https://github.com/cognis-digital) and [jtf-meridian](https://github.com/cognis-digital/jtf-meridian) for how the pieces fit together.
+<!-- cognis:domains:end -->
+
+<!-- cognis:install:start -->
+## Install
+
+`promptpack` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/promptpack/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/promptpack/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/promptpack.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/promptpack.git"  # uv
+pip install "git+https://github.com/cognis-digital/promptpack.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/promptpack.git
+cd promptpack && pip install .
+```
+
+Then run:
+```sh
+promptpack --help
+```
+<!-- cognis:install:end -->
+
 ## Quick start
 
 ```bash
-pip install cognis-promptpack
+pip install "git+https://github.com/cognis-digital/promptpack.git"
 promptpack --version
 promptpack scan .                       # scan current project
 promptpack scan . --format json         # machine-readable
