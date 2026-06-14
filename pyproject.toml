@@ -34,3 +34,6 @@ promptpack = "promptpack.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["promptpack"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
