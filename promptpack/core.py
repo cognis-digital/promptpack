@@ -30,6 +30,7 @@ from typing import Any, Dict, List, Optional
 DEFAULT_DB = os.environ.get("PROMPTPACK_DB", ".promptpack.json")
 
 _VAR_RE = re.compile(r"\{([a-zA-Z_][a-zA-Z0-9_]*)\}")
+_NAME_RE = re.compile(r"^[A-Za-z0-9_\-\.]+$")
 
 
 class PromptPackError(Exception):
@@ -62,16 +63,42 @@ class Registry:
 
     # ---- persistence -------------------------------------------------
     def _load(self) -> None:
-        if os.path.exists(self.path):
+        if not os.path.exists(self.path):
+            self._data.setdefault("prompts", {})
+            return
+        try:
             with open(self.path, "r", encoding="utf-8") as fh:
-                self._data = json.load(fh)
+                raw = json.load(fh)
+        except json.JSONDecodeError as exc:
+            raise PromptPackError(
+                f"registry file is not valid JSON: {self.path!r} — {exc}"
+            ) from exc
+        except OSError as exc:
+            raise PromptPackError(
+                f"cannot read registry file: {self.path!r} — {exc}"
+            ) from exc
+        if not isinstance(raw, dict):
+            raise PromptPackError(
+                f"registry file must contain a JSON object, got {type(raw).__name__}: {self.path!r}"
+            )
+        prompts = raw.get("prompts", {})
+        if not isinstance(prompts, dict):
+            raise PromptPackError(
+                f"registry 'prompts' field must be an object, got {type(prompts).__name__}: {self.path!r}"
+            )
+        self._data = raw
         self._data.setdefault("prompts", {})
 
     def save(self) -> None:
         tmp = self.path + ".tmp"
-        with open(tmp, "w", encoding="utf-8") as fh:
-            json.dump(self._data, fh, indent=2, sort_keys=True)
-        os.replace(tmp, self.path)
+        try:
+            with open(tmp, "w", encoding="utf-8") as fh:
+                json.dump(self._data, fh, indent=2, sort_keys=True)
+            os.replace(tmp, self.path)
+        except OSError as exc:
+            raise PromptPackError(
+                f"cannot write registry file: {self.path!r} — {exc}"
+            ) from exc
 
     # ---- internal helpers --------------------------------------------
     def _prompt(self, name: str) -> Dict[str, Any]:
@@ -121,6 +148,14 @@ class Registry:
 
     def commit(self, name: str, body: str, message: str = "") -> Dict[str, Any]:
         """Append a new immutable version. Refuses duplicate-of-latest bodies."""
+        if not name:
+            raise PromptPackError("prompt name must not be empty")
+        if not _NAME_RE.match(name):
+            raise PromptPackError(
+                f"invalid prompt name {name!r}; use letters, digits, hyphens, underscores, or dots"
+            )
+        if not isinstance(body, str):
+            raise PromptPackError("prompt body must be a string")
         p = self._data["prompts"].setdefault(
             name, {"versions": [], "tags": {}, "ab": {}}
         )
@@ -217,6 +252,10 @@ class Registry:
             obj = self._version_obj(name, version)
             return {"version": version, "weight": None, "hash": obj["hash"]}
         total = sum(v["weight"] for v in variants)
+        if total <= 0:
+            raise PromptPackError(
+                f"A/B variant weights must sum to a positive number for {name!r}:{tag!r}"
+            )
         if key is not None:
             h = int(hashlib.sha256(key.encode("utf-8")).hexdigest(), 16)
             point = (h % 10_000_000) / 10_000_000 * total

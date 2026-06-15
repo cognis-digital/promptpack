@@ -49,7 +49,19 @@ def _parse_variants(specs: List[str]) -> List[dict]:
             ver, w = s.split(":", 1)
         else:
             ver, w = s, "1"
-        out.append({"version": int(ver), "weight": float(w)})
+        try:
+            version_int = int(ver)
+        except ValueError:
+            raise PromptPackError(
+                f"bad variant {s!r}; version part must be an integer (got {ver!r})"
+            )
+        try:
+            weight_float = float(w)
+        except ValueError:
+            raise PromptPackError(
+                f"bad variant {s!r}; weight part must be a number (got {w!r})"
+            )
+        out.append({"version": version_int, "weight": weight_float})
     return out
 
 
@@ -120,15 +132,27 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Optional[List[str]] = None) -> int:
     ap = build_parser()
     args = ap.parse_args(argv)
-    reg = Registry(args.db)
+    try:
+        reg = Registry(args.db)
+    except PromptPackError as exc:
+        fmt = getattr(args, "format", "table")
+        if fmt == "json":
+            import json as _json
+            print(_json.dumps({"error": str(exc)}), file=sys.stderr)
+        else:
+            print(f"error: {exc}", file=sys.stderr)
+        return 1
     try:
         if args.cmd == "commit":
             if args.file:
                 if args.file == "-":
                     body = sys.stdin.read()
                 else:
-                    with open(args.file, "r", encoding="utf-8") as fh:
-                        body = fh.read()
+                    try:
+                        with open(args.file, "r", encoding="utf-8") as fh:
+                            body = fh.read()
+                    except OSError as exc:
+                        raise PromptPackError(f"cannot read file {args.file!r}: {exc}") from exc
             else:
                 body = args.body
             res = reg.commit(args.name, body, args.message)
