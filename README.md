@@ -20,6 +20,71 @@ pip install cognis-promptpack
 promptpack scan .            # → prioritized findings in seconds
 ```
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ promptpack-emit --version
+promptpack 0.1.0
+```
+
+```console
+$ promptpack-emit --help
+usage: promptpack [-h] [--version] [--db DB] [--format {table,json}]
+                  {commit,list,get,history,tag,rollback,render,diff,ab,choose} ...
+
+Versioned prompt registry with A/B and rollbacks.
+
+positional arguments:
+  {commit,list,get,history,tag,rollback,render,diff,ab,choose}
+    commit              add a new immutable version
+    list                list prompts
+    get                 show a version's body
+    history             version history of a prompt
+    tag                 point a tag at a version
+    rollback            roll a tag back to a prior version
+    render              render a version with variables
+    diff                unified diff between two refs
+    ab                  attach weighted A/B variants to a tag
+    choose              select an A/B variant (deterministic with --key)
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --db DB               registry file path
+  --format {table,json}
+```
+
+> Blocks above are real `promptpack` output — reproduce them from a clone.
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+"findings": [
+    {
+        "id": "1234567890",
+        "title": "Suspicious Network Traffic",
+        "description": "A potential threat was detected on a network interface.",
+        "severity": "medium",
+        "created_at": "2023-02-15T14:30:00Z"
+    },
+    {
+        "id": "2345678901",
+        "title": "Malware Detection",
+        "description": "A malicious file was detected on a system.",
+        "severity": "high",
+        "created_at": "2023-02-16T10:45:00Z"
+    }
+]
+}
+```
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 1. Install the CLI (Python 3.9+):

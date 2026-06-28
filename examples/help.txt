@@ -1,0 +1,25 @@
+$ promptpack-emit --help
+
+usage: promptpack [-h] [--version] [--db DB] [--format {table,json}]
+                  {commit,list,get,history,tag,rollback,render,diff,ab,choose} ...
+
+Versioned prompt registry with A/B and rollbacks.
+
+positional arguments:
+  {commit,list,get,history,tag,rollback,render,diff,ab,choose}
+    commit              add a new immutable version
+    list                list prompts
+    get                 show a version's body
+    history             version history of a prompt
+    tag                 point a tag at a version
+    rollback            roll a tag back to a prior version
+    render              render a version with variables
+    diff                unified diff between two refs
+    ab                  attach weighted A/B variants to a tag
+    choose              select an A/B variant (deterministic with --key)
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --db DB               registry file path
+  --format {table,json}

@@ -1,0 +1,3 @@
+$ promptpack-emit --version
+
+promptpack 0.1.0
